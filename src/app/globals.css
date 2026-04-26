@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;700;900&family=Sarabun:wght@400;700&display=swap');
+
+:root {
+  --hot-pink: #ff2d78;
+  --electric-yellow: #ffe600;
+  --neon-green: #39ff14;
+  --chaos-orange: #ff6b00;
+  --sky-blue: #00cfff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Kanit', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Scrollbar chaos */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #ff2d78;
+}
+::-webkit-scrollbar-thumb {
+  background: #ffe600;
+  border-radius: 4px;
+}
+
+/* Rainbow border animation */
+@keyframes borderRainbow {
+  0% { border-color: #ff2d78; }
+  16% { border-color: #ff6b00; }
+  33% { border-color: #ffe600; }
+  50% { border-color: #39ff14; }
+  66% { border-color: #00cfff; }
+  83% { border-color: #a855f7; }
+  100% { border-color: #ff2d78; }
+}
+
+@keyframes bgPulse {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes marqueeLeft {
+  0% { transform: translateX(100vw); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+  70% { transform: scale(1.1) rotate(3deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes floatEmoji {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+}
+
+@keyframes textGlitch {
+  0%, 100% { text-shadow: 3px 0 #ff2d78, -3px 0 #00cfff; }
+  25% { text-shadow: -3px 0 #ff2d78, 3px 0 #00cfff; }
+  50% { text-shadow: 3px 3px #ffe600, -3px -3px #39ff14; }
+  75% { text-shadow: -3px 3px #ff6b00, 3px -3px #a855f7; }
+}
+
+.glitch-text {
+  animation: textGlitch 0.3s infinite;
+}
+
+.pop-in {
+  animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.marquee-text {
+  animation: marqueeLeft 8s linear infinite;
+  white-space: nowrap;
+}
+
+.float-emoji {
+  animation: floatEmoji linear forwards;
+}
+
+.rainbow-border {
+  animation: borderRainbow 1s linear infinite;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #ff2d78, #ff6b00, #ffe600, #39ff14, #00cfff, #a855f7);
+  background-size: 400% 400%;
+  animation: bgPulse 3s ease infinite;
+}
+
+/* Button hover shake */
+.btn-chaos {
+  transition: transform 0.1s;
+}
+.btn-chaos:hover {
+  animation: shake 0.4s ease-in-out;
+}
+.btn-chaos:active {
+  transform: scale(0.95);
+}
+
+/* Card chaos */
+.card-chaos {
+  border: 4px solid;
+  animation: borderRainbow 1.5s linear infinite;
+}
