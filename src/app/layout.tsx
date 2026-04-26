@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "🎂 สุขสันต์วันเกิดไอ่เพื่อน!!",
-  description: "เว็บวันเกิดสุดเฮงซวยของเพื่อน",
+  title: "🎂 สุขสันต์วันเกิดนะ!",
+  description: "เว็บเล็ก ๆ ที่ทำมาเพื่ออวยพรวันเกิดเพื่อนคนสำคัญ",
   viewport: "width=device-width, initial-scale=1, maximum-scale=1",
+  icons: {
+    icon: "/favicon.ico",
+  }
 };
 
 export default function RootLayout({

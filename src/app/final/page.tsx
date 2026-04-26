@@ -210,7 +210,7 @@ export default function FinalPage() {
 
         {/* Footer message */}
         <p className="text-white opacity-30 text-xs mt-4">
-          made with 💀 and ❤️ by Natakorn
+          made with 💀 & ❤️ — Natakorn
         </p>
       </div>
 
