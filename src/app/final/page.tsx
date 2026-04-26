@@ -162,15 +162,15 @@ export default function FinalPage() {
               >
                 ขอให้มีความสุขมาก ๆ นะ
                 <br />
-                ทุกอย่างที่อยากได้ ขอให้ได้สมใจ
+                ทุกสิ่งที่หวังไว้ ขอให้ได้สมใจ
                 <br />
-                ส่วนอะไรที่ไม่อยากเจอ ก็ขอให้หลีกไปไกล ๆ เลย 😂
+                ส่วนเรื่องที่ไม่อยากเจอ ก็ขอให้หายไปไกล ๆ 😂
               </p>
               <p
                 className="mt-3 font-black"
                 style={{ color: "#39ff14", fontSize: "1.1rem" }}
               >
-                จากเพื่อนคนที่หวังดีกับคุณเสมอ 🫶
+                จากคนที่หวังดีกับคุณเสมอ 🫶
               </p>
             </div>
           </div>
@@ -191,7 +191,7 @@ export default function FinalPage() {
                 boxShadow: "0 6px 0 #000",
               }}
             >
-              🎊 ระเบิด confetti อีกที!
+              🎊 ปล่อยพลุอีกที!
             </button>
 
             <button
@@ -203,7 +203,7 @@ export default function FinalPage() {
                 boxShadow: "0 6px 0 #000",
               }}
             >
-              🔄 เริ่มใหม่อีกรอบ!
+              🚀 วนอีกสักรอบ!
             </button>
           </div>
         )}

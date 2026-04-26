@@ -43,7 +43,7 @@ export default function HomePage() {
   };
 
   const topMarqueeText = "🎉 วันเกิดคุณแล้วนะ!! \u00a0\u00a0 🎂 สุขสันต์วันเกิดครับ \u00a0\u00a0 🔥 ฉลองเลยยย \u00a0\u00a0 🎈 อีกปีแล้วน้า \u00a0\u00a0 💀 ยิ่งโตยิ่งดูดีขึ้นนะ 😂 \u00a0\u00a0\u00a0\u00a0";
-  const bottomMarqueeText = "💀 โตขึ้นมาอีกปีแล้วนะ \u00a0\u00a0 🤣 ยังไม่รวยอีกเหรอเนี่ย 😂 \u00a0\u00a0 แต่ก็รักอยู่เหมือนเดิมนะ ❤️ \u00a0\u00a0 HBD เพื่อน!! 🎉 \u00a0\u00a0\u00a0\u00a0";
+  const bottomMarqueeText = "💀 โตขึ้นมาอีกปีแล้วนะ \u00a0\u00a0 ปีนี้ขอให้รวยแบบไม่ทันตั้งตัว 💸 \u00a0\u00a0 แต่ก็รักอยู่เหมือนเดิมนะ ❤️ \u00a0\u00a0 HBD เพื่อน!! 🎉 \u00a0\u00a0\u00a0\u00a0";
 
   return (
     <div
@@ -176,7 +176,7 @@ export default function HomePage() {
           style={{ color: "#00cfff", textShadow: "0 0 10px #00cfff" }}
         >
           เฮ้ยยย!! วันนี้วันเกิดแล้วนะ<br />
-          <span style={{ color: "#39ff14" }}>กดรับของขวัญด่วนเลย!!! 👇</span>
+          <span style={{ color: "#39ff14" }}>ของขวัญรออยู่ รีบกดเลย!!! 👇</span>
         </p>
 
         {/* CTA Button */}
@@ -197,7 +197,7 @@ export default function HomePage() {
             minWidth: "260px",
           }}
         >
-          {clicked ? "⏳ กำลังโหลด..." : "กดเพื่อรับของขวัญ 🎁"}
+          {clicked ? "⏳ กำลังเปิดของขวัญ..." : "กดเพื่อรับของขวัญ 🎁"}
         </button>
 
         {/* Small note */}
@@ -205,7 +205,7 @@ export default function HomePage() {
           className="text-sm opacity-60"
           style={{ color: "#ffffff" }}
         >
-          (กดได้เลย ไม่มีไวรัสหรอกวว 😇)
+          (ปลอดภัย...มั้งนะ 😂)
         </p>
 
         {/* Tap title hint */}
@@ -213,7 +213,7 @@ export default function HomePage() {
           className="text-xs opacity-40 mt-2"
           style={{ color: "#ffe600" }}
         >
-          ลองกดที่ชื่อดูสิ 👆
+          แอบมีอะไรซ่อนอยู่ 👆
         </p>
       </div>
 
