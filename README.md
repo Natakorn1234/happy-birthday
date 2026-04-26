@@ -27,12 +27,12 @@ Edit `src/app/gift/page.tsx` → `MESSAGES` array to add your own funny messages
 
 Edit `src/app/final/page.tsx` to change the final message.
 
----
-
 ## 💡 Concept
 
 - Built fast. Made fun. Shared with friends.
 
 This project is about creating a small digital moment for someone’s birthday — simple, meme-driven, and personal.
+
+---
 
 Made with 💀 and ❤️ · Powered by [Claude Code](https://claude.ai/code) 🤖
