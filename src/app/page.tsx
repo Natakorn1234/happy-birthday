@@ -42,6 +42,9 @@ export default function HomePage() {
     setTimeout(() => setShake(false), 500);
   };
 
+  const topMarqueeText = "🎉 วันเกิดคุณแล้วนะ!! \u00a0\u00a0 🎂 สุขสันต์วันเกิดครับ \u00a0\u00a0 🔥 ฉลองเลยยย \u00a0\u00a0 🎈 อีกปีแล้วน้า \u00a0\u00a0 💀 ยิ่งโตยิ่งดูดีขึ้นนะ 😂 \u00a0\u00a0\u00a0\u00a0";
+  const bottomMarqueeText = "💀 โตขึ้นมาอีกปีแล้วนะ \u00a0\u00a0 🤣 ยังไม่รวยอีกเหรอเนี่ย 😂 \u00a0\u00a0 แต่ก็รักอยู่เหมือนเดิมนะ ❤️ \u00a0\u00a0 HBD เพื่อน!! 🎉 \u00a0\u00a0\u00a0\u00a0";
+
   return (
     <div
       className="min-h-screen relative overflow-hidden flex flex-col items-center justify-center px-4"
@@ -106,20 +109,23 @@ export default function HomePage() {
         </span>
       ))}
 
-      {/* Marquee top */}
+      {/* Marquee top — seamless loop using two copies side by side */}
       <div
         className="absolute top-0 w-full overflow-hidden py-2"
-        style={{
-          background: "#ff2d78",
-          zIndex: 10,
-        }}
+        style={{ background: "#ff2d78", zIndex: 10 }}
       >
-        <span
-          className="inline-block text-white font-black text-sm"
-          style={{ animation: "marqueeLeft 6s linear infinite" }}
+        <div
+          className="flex"
+          style={{ animation: "marqueeLoop 20s linear infinite", width: "max-content" }}
         >
-          🎉 วันเกิดคุณแล้วนะ!! 🎂 สุขสันต์วันเกิดครับ 🔥 ฉลองเลยยย 🎈 อีกปีแล้วน้า 💀 ยิ่งโตยิ่งดูดีขึ้นนะ 😂 หรือจะโตแบบมีความสุขขึ้นกันแน่ 😆 🎉 วันเกิดคุณแล้วนะ!! 🎂 สุขสันต์วันเกิดครับ
-        </span>
+          <span className="text-white font-black text-sm whitespace-nowrap">
+            {topMarqueeText}
+          </span>
+          {/* Duplicate for seamless loop */}
+          <span className="text-white font-black text-sm whitespace-nowrap">
+            {topMarqueeText}
+          </span>
+        </div>
       </div>
 
       {/* Main content */}
@@ -211,20 +217,23 @@ export default function HomePage() {
         </p>
       </div>
 
-      {/* Bottom marquee */}
+      {/* Bottom marquee — seamless loop */}
       <div
         className="absolute bottom-0 w-full overflow-hidden py-2"
-        style={{
-          background: "#ffe600",
-          zIndex: 10,
-        }}
+        style={{ background: "#ffe600", zIndex: 10 }}
       >
-        <span
-          className="inline-block text-black font-black text-sm"
-          style={{ animation: "marqueeLeft 8s linear infinite reverse" }}
+        <div
+          className="flex"
+          style={{ animation: "marqueeLoop 25s linear infinite reverse", width: "max-content" }}
         >
-          💀 โตขึ้นมาอีกปีแล้วนะ 🤣 ยังไม่รวยอีกเหรอเนี่ย 😂 แต่ก็ยังเอ็นดูอยู่เหมือนเดิมนะ ❤️ HBD เพื่อน!! 🎉 💀 โตขึ้นมาอีกปีแล้วนะ 🤣
-        </span>
+          <span className="text-black font-black text-sm whitespace-nowrap">
+            {bottomMarqueeText}
+          </span>
+          {/* Duplicate for seamless loop */}
+          <span className="text-black font-black text-sm whitespace-nowrap">
+            {bottomMarqueeText}
+          </span>
+        </div>
       </div>
     </div>
   );
