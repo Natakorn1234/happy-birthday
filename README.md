@@ -41,6 +41,7 @@ npm run dev
 - **canvas-confetti** for confetti explosion
 - **Framer Motion** (optional, not used to keep bundle small)
 - Zero backend, zero database, zero auth
+- ⚡ Built with [Claude Code](https://claude.ai/code)
 
 ## 🎨 Customization
 
@@ -50,4 +51,4 @@ Edit `src/app/final/page.tsx` to change the final message.
 
 ---
 
-Made with 💀 and ❤️
+Made with 💀 and ❤️ · Powered by [Claude Code](https://claude.ai/code) 🤖
