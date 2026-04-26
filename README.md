@@ -1,6 +1,7 @@
-# 🎂 Birthday Site สุดเฮงซวย
+# 🎂 Birthday Site
 
 เว็บวันเกิดสุด meme สำหรับเพื่อนสุดที่รัก
+🌐 Live Demo: [happy-birthday-teal-ten.vercel.app](https://happy-birthday-teal-ten.vercel.app/)
 
 ## 🚀 Deploy to Vercel (2 minutes)
 

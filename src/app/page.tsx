@@ -118,7 +118,7 @@ export default function HomePage() {
           className="inline-block text-white font-black text-sm"
           style={{ animation: "marqueeLeft 6s linear infinite" }}
         >
-          🎉 วันเกิดมึงว่ะ!! 🎂 สุขสันต์นะเว้ย 🔥 ฉลองเลยยย 🎈 อีกปีแล้วน้า 💀 ยิ่งแก่ยิ่งหล่อ? 😂 หรือจะแก่ซ้ำซาก?? 🎉 วันเกิดมึงว่ะ!! 🎂 สุขสันต์นะเว้ย
+          🎉 วันเกิดคุณแล้วนะ!! 🎂 สุขสันต์วันเกิดครับ 🔥 ฉลองเลยยย 🎈 อีกปีแล้วน้า 💀 ยิ่งโตยิ่งดูดีขึ้นนะ 😂 หรือจะโตแบบมีความสุขขึ้นกันแน่ 😆 🎉 วันเกิดคุณแล้วนะ!! 🎂 สุขสันต์วันเกิดครับ
         </span>
       </div>
 
@@ -160,7 +160,7 @@ export default function HomePage() {
               letterSpacing: "-0.02em",
             }}
           >
-            ไอ่เพื่อน!! 🎂
+            🎉 เฮ้ยเพื่อน!! 🎂
           </h1>
         </div>
 
@@ -169,7 +169,7 @@ export default function HomePage() {
           className="font-bold text-lg max-w-xs"
           style={{ color: "#00cfff", textShadow: "0 0 10px #00cfff" }}
         >
-          เฮ้ยยย!! วันนี้วันเกิดมึงแล้วนะ<br />
+          เฮ้ยยย!! วันนี้วันเกิดแล้วนะ<br />
           <span style={{ color: "#39ff14" }}>กดรับของขวัญด่วนเลย!!! 👇</span>
         </p>
 
@@ -223,7 +223,7 @@ export default function HomePage() {
           className="inline-block text-black font-black text-sm"
           style={{ animation: "marqueeLeft 8s linear infinite reverse" }}
         >
-          💀 โตขึ้นมาอีกปีแล้วเว้ย 🤣 ยังไม่รวยอีกหรอ? 😂 แต่ก็ยังรักมึงนะ ❤️ HBD ไอ่เพื่อน!! 🎉 💀 โตขึ้นมาอีกปีแล้วเว้ย 🤣
+          💀 โตขึ้นมาอีกปีแล้วนะ 🤣 ยังไม่รวยอีกเหรอเนี่ย 😂 แต่ก็ยังเอ็นดูอยู่เหมือนเดิมนะ ❤️ HBD เพื่อน!! 🎉 💀 โตขึ้นมาอีกปีแล้วนะ 🤣
         </span>
       </div>
     </div>

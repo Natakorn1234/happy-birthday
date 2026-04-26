@@ -154,23 +154,23 @@ export default function FinalPage() {
                 className="font-bold text-xl leading-relaxed"
                 style={{ color: "#ffe600", textShadow: "0 0 10px rgba(255,230,0,0.5)" }}
               >
-                รักมึงว่ะ ❤️🔥
+                สุขสันต์วันเกิดนะ ❤️🔥
               </p>
               <p
                 className="text-white opacity-80 mt-3 leading-relaxed"
                 style={{ fontSize: "1rem" }}
               >
-                ขอให้มีความสุขมากๆ นะ
+                ขอให้มีความสุขมาก ๆ นะ
                 <br />
-                ทุกอย่างที่อยากได้ขอให้ได้
+                ทุกอย่างที่อยากได้ ขอให้ได้สมใจ
                 <br />
-                ทุกอย่างที่ไม่อยากได้... ก็ขอให้แคล้วคลาดด้วยนะ 😂
+                ส่วนอะไรที่ไม่อยากเจอ ก็ขอให้หลีกไปไกล ๆ เลย 😂
               </p>
               <p
                 className="mt-3 font-black"
                 style={{ color: "#39ff14", fontSize: "1.1rem" }}
               >
-                จากเพื่อนคนที่รักมึงที่สุด 🫶
+                จากเพื่อนคนที่หวังดีกับคุณเสมอ 🫶
               </p>
             </div>
           </div>
@@ -210,7 +210,7 @@ export default function FinalPage() {
 
         {/* Footer message */}
         <p className="text-white opacity-30 text-xs mt-4">
-          made with 💀 and ❤️ for เพื่อนสุดที่รัก
+          made with 💀 and ❤️ by Natakorn
         </p>
       </div>
 
