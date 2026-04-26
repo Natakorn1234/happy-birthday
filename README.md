@@ -4,30 +4,6 @@
 
 🌐 Live Demo: [happy-birthday-teal-ten.vercel.app](https://happy-birthday-teal-ten.vercel.app/)
 
-## 🚀 Deploy to Vercel (2 minutes)
-
-### Option A: One-click via GitHub
-1. Push this folder to a GitHub repo
-2. Go to [vercel.com](https://vercel.com) → New Project
-3. Import your repo → Deploy
-4. Done! 🎉
-
-### Option B: Vercel CLI
-```bash
-npm i -g vercel
-cd birthday-site
-npm install
-vercel deploy
-```
-
-## 🛠 Local Development
-
-```bash
-npm install
-npm run dev
-# Open http://localhost:3000
-```
-
 ## 📁 Pages
 
 | Page | Route | Description |
@@ -52,5 +28,11 @@ Edit `src/app/gift/page.tsx` → `MESSAGES` array to add your own funny messages
 Edit `src/app/final/page.tsx` to change the final message.
 
 ---
+
+## 💡 Concept
+
+- Built fast. Made fun. Shared with friends.
+
+This project is about creating a small digital moment for someone’s birthday — simple, meme-driven, and personal.
 
 Made with 💀 and ❤️ · Powered by [Claude Code](https://claude.ai/code) 🤖
