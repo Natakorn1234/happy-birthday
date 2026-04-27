@@ -28,6 +28,7 @@ export default function HomePage() {
   const [floaters, setFloaters] = useState<FloatingEmoji[]>([]);
   const [shake, setShake] = useState(false);
   const [subtitle, setSubtitle] = useState("ของขวัญรออยู่ รีบกดเลย 👇");
+  const [cooldown, setCooldown] = useState(false);
 
   useEffect(() => {
     const items: FloatingEmoji[] = Array.from({ length: 10 }, (_, i) => ({
@@ -47,13 +48,16 @@ export default function HomePage() {
   };
 
   const handleTitleClick = () => {
+    if (cooldown) return;
+
+    setCooldown(true);
     setShake(true);
 
     const msg = SECRET_MESSAGES[Math.floor(Math.random() * SECRET_MESSAGES.length)];
     setSubtitle(msg);
 
     setTimeout(() => setShake(false), 500);
-    setTimeout(() => setSubtitle("ของขวัญรออยู่ รีบกดเลย 👇"), 2000);
+    setTimeout(() => setCooldown(false), 1200);
   };
 
   const topMarqueeText = "🎉 วันนี้คือวันของคุณ \u00a0\u00a0 🎂 โหมดฉลองเปิดใช้งาน \u00a0\u00a0 🚨 ตรวจพบวันเกิด \u00a0\u00a0 💀 แก่ขึ้นอีกปีแบบไม่ทันตั้งตัว \u00a0\u00a0 🌟 ปีนี้ต้องปัง \u00a0\u00a0\u00a0\u00a0";
@@ -227,7 +231,7 @@ export default function HomePage() {
           className="text-xs opacity-40 mt-2"
           style={{ color: "#ffe600" }}
         >
-          ลองแตะดูสิ 👆
+          แตะเพื่อดูข้อความลับ 👆
         </p>
       </div>
 

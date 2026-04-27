@@ -1,8 +1,10 @@
 # 🎂 Interactive Birthday Experience
 
+A small interactive birthday experience built with Next.js and animations.
+
 A playful and heartfelt birthday website built as a mini digital journey — designed to make someone smile, laugh, and feel celebrated.
 
-🌐 Live Demo: [happy-birthday-teal-ten.vercel.app](https://happy-birthday-teal-ten.vercel.app/)
+🌐 Live Demo: https://happy-birthday-teal-ten.vercel.app/
 
 ---
 
@@ -36,8 +38,7 @@ The goal was to create a memorable digital moment that feels personal, fun, and 
 - **Tailwind CSS**
 - **canvas-confetti**
 - **React Hooks**
-- Fully client-side
-- No backend / database required
+- Fully client-side (no backend / database)
 
 ---
 

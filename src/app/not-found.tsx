@@ -127,14 +127,14 @@ export default function NotFound() {
               textShadow: "3px 3px 0 #ffe600",
             }}
           >
-            หน้านี้ไม่มีอยู่จริงนะเว้ย!! 💀
+            หน้านี้หายไปเฉยเลยอะ 💀
           </h1>
           <p
             className="font-bold"
             style={{ color: "#00cfff", fontSize: "1rem", lineHeight: 1.6 }}
           >
-            หลงมาถูกที่แล้ว... แต่ผิดหน้า 😂
-            <br />
+            หลงมาจริงดิ 😭<br />
+            หรือระบบมันลบเองกันแน่ 👀<br />
             <span style={{ color: "#39ff14" }}>
               ไม่ต้องตกใจ จะพาไปหน้าแรกเอง!
             </span>

@@ -42,8 +42,8 @@ export default function PageLoader({ onDone }: { onDone: () => void }) {
 
   // Drive progress bar + step text
   useEffect(() => {
-    const totalMs = 2600;
-    const interval = 30;
+    const totalMs = 4200;
+    const interval = 25;
     let elapsed = 0;
 
     const timer = setInterval(() => {
@@ -59,8 +59,8 @@ export default function PageLoader({ onDone }: { onDone: () => void }) {
         // Brief pause at 100% before exit
         setTimeout(() => {
           setExiting(true);
-          setTimeout(onDone, 500);
-        }, 300);
+          setTimeout(onDone, 700);
+        }, 600);
       }
     }, interval);
 
