@@ -210,7 +210,7 @@ export default function FinalPage() {
 
       {/* Bottom decoration */}
       <div
-        className="fixed bottom-0 left-0 right-0 h-2"
+        className="absolute bottom-0 left-0 right-0 h-2"
         style={{
           background: "linear-gradient(90deg, #a855f7, #00cfff, #39ff14, #ffe600, #ff6b00, #ff2d78)",
           backgroundSize: "300% 100%",
