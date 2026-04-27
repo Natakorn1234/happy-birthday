@@ -74,7 +74,7 @@ export default function FinalPage() {
 
   return (
     <div
-      className="min- h-screen relative overflow-hidden flex flex-col items-center justify-center px-4 py-12"
+      className="min-h-screen relative overflow-hidden flex flex-col items-center justify-center px-4 py-12 md:py-12"
       style={{
         background: "linear-gradient(160deg, #0a0020, #1e003a, #0a0020)",
       }}
