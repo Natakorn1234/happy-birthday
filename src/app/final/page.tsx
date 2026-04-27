@@ -121,7 +121,7 @@ export default function FinalPage() {
 
         {clickCount > 0 && (
           <p className="text-pink-400 text-sm font-bold" style={{ animation: "popIn 0.3s ease forwards" }}>
-            กด {clickCount} ครั้งแล้ว! {clickCount > 5 ? "😭 ขอบคุณที่รักกัน" : "🎊 confetti!!"}
+            กด {clickCount} ครั้งแล้ว! {clickCount > 5 ? "🥹 ขอบคุณที่อยู่ตรงนี้" : "🎉 ฉลองกันเลย!"}
           </p>
         )}
 
@@ -136,9 +136,9 @@ export default function FinalPage() {
                 textShadow: "4px 4px 0 #ffe600",
               }}
             >
-              HBD นะเว้ย
+              HBD นะ
               <br />
-              เพื่อน!! 🎂
+              คนเก่ง!! 🎂
             </h1>
 
             <div

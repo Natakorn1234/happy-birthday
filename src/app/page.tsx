@@ -42,8 +42,8 @@ export default function HomePage() {
     setTimeout(() => setShake(false), 500);
   };
 
-  const topMarqueeText = "🎉 วันเกิดคุณแล้วนะ!! \u00a0\u00a0 🎂 สุขสันต์วันเกิดครับ \u00a0\u00a0 🔥 ฉลองเลยยย \u00a0\u00a0 🎈 อีกปีแล้วน้า \u00a0\u00a0 💀 ยิ่งโตยิ่งดูดีขึ้นนะ 😂 \u00a0\u00a0\u00a0\u00a0";
-  const bottomMarqueeText = "💀 โตขึ้นมาอีกปีแล้วนะ \u00a0\u00a0 ปีนี้ขอให้รวยแบบไม่ทันตั้งตัว 💸 \u00a0\u00a0 แต่ก็รักอยู่เหมือนเดิมนะ ❤️ \u00a0\u00a0 HBD เพื่อน!! 🎉 \u00a0\u00a0\u00a0\u00a0";
+  const topMarqueeText = "🎉 วันเกิดคุณแล้วนะ!! \u00a0\u00a0 🎂 สุขสันต์วันเกิดครับ \u00a0\u00a0 🔥 ฉลองเลยยย \u00a0\u00a0 🎈 อีกปีแล้วน้า \u00a0\u00a0 🌟 ขอให้ปีนี้เป็นปีที่ดีมาก ๆ \u00a0\u00a0\u00a0\u00a0";
+  const bottomMarqueeText = "💀 โตขึ้นมาอีกปีแล้วนะ \u00a0\u00a0 ปีนี้ขอให้รวยแบบไม่ทันตั้งตัว 💸 \u00a0\u00a0 และยังส่งกำลังใจให้เสมอ ❤️ \u00a0\u00a0 HBD เพื่อน!! 🎉 \u00a0\u00a0\u00a0\u00a0";
 
   return (
     <div
@@ -166,7 +166,7 @@ export default function HomePage() {
               letterSpacing: "-0.02em",
             }}
           >
-            🎉 เฮ้ยเพื่อน!! 🎂
+            🎉 คนพิเศษ!! 🎂
           </h1>
         </div>
 
