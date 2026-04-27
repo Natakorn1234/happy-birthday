@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "🎂 สุขสันต์วันเกิดนะ!",
@@ -22,6 +24,8 @@ export const metadata: Metadata = {
     description: "เว็บเล็ก ๆ ที่ทำมาเพื่ออวยพรวันเกิดเพื่อนคนสำคัญ",
     images: ["/preview.png"],
   },
+
+  metadataBase: new URL("https://happy-birthday-teal-ten.vercel.app/"),
 };
 
 export const viewport: Viewport = {
@@ -51,6 +55,8 @@ export default function RootLayout({
       </head>
       <body style={{ fontFamily: "'Kanit', sans-serif" }}>
         {children}
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
