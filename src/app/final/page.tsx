@@ -128,7 +128,7 @@ export default function FinalPage() {
 
         {clickCount > 0 && (
           <p className="text-pink-400 text-sm font-bold">
-            ส่งพลังใจแล้ว {clickCount} ครั้ง ✨
+            ส่งพลังใจแล้ว {clickCount} ครั้ง ✨ {clickCount > 5 ? "🥹 ขอบคุณที่อยู่จนจบ" : "🎉 ความสุขกำลังเพิ่มขึ้น!"}
           </p>
         )}
 
