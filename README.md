@@ -1,38 +1,62 @@
-# 🎂 Birthday Site
+# 🎂 Interactive Birthday Experience
 
-เว็บวันเกิดสุด meme สำหรับเพื่อนสุดที่รัก
+A playful and heartfelt birthday website built as a mini digital journey — designed to make someone smile, laugh, and feel celebrated.
 
 🌐 Live Demo: [happy-birthday-teal-ten.vercel.app](https://happy-birthday-teal-ten.vercel.app/)
 
+---
+
+## ✨ Overview
+
+This project transforms a simple birthday greeting into an interactive web experience.
+
+Instead of a static page, visitors move through multiple stages:
+
+- **Home** → a bold welcome screen
+- **Gift** → randomized encouraging messages
+- **Final** → a celebratory ending with confetti and heartfelt wishes
+
+The goal was to create a memorable digital moment that feels personal, fun, and emotionally engaging.
+
+---
+
 ## 📁 Pages
 
-| Page | Route | Description |
-|------|-------|-------------|
-| Home | `/` | Landing page with big birthday text |
-| Gift | `/gift` | Random funny Thai messages |
-| Final | `/final` | Confetti + love message |
+| Page  | Route    | Purpose |
+|-------|----------|---------|
+| Home  | `/`      | Opening screen / first impression |
+| Gift  | `/gift`  | Interactive message reveal system |
+| Final | `/final` | Celebration ending with animations |
+
+---
 
 ## ⚙️ Tech Stack
 
 - **Next.js 14** (App Router)
-- **TailwindCSS** for styling
-- **canvas-confetti** for confetti explosion
-- **Framer Motion** (optional, not used to keep bundle small)
-- Zero backend, zero database, zero auth
-- ⚡ Built with [Claude Code](https://claude.ai/code)
-
-## 🎨 Customization
-
-Edit `src/app/gift/page.tsx` → `MESSAGES` array to add your own funny messages!
-
-Edit `src/app/final/page.tsx` to change the final message.
-
-## 💡 Concept
-
-- Built fast. Made fun. Shared with friends.
-
-This project is about creating a small digital moment for someone’s birthday — simple, meme-driven, and personal.
+- **Tailwind CSS**
+- **canvas-confetti**
+- **React Hooks**
+- Fully client-side
+- No backend / database required
 
 ---
 
-Made with 💀 and ❤️ · Powered by [Claude Code](https://claude.ai/code) 🤖
+## 🎨 Customization
+
+To personalize the experience:
+
+- Edit `src/app/gift/page.tsx` → update the `MESSAGES` array
+- Edit `src/app/final/page.tsx` → customize the final message
+- Adjust colors, animations, and transitions for your own theme
+
+---
+
+## 💡 Project Concept
+
+This project explores how small interactive details — animations, progression, randomization, and emotional copywriting — can turn a simple greeting into an experience.
+
+It is intentionally lightweight, personal, and built for sharing.
+
+---
+
+Made with 💀 & ❤️ by Natakorn

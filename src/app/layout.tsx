@@ -2,9 +2,10 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
+import ClientLoader from "./Clientloader";
 
 export const metadata: Metadata = {
-  title: "🎂 สุขสันต์วันเกิดนะ!",
+  title: "🎂 สุขสันต์วันเกิด",
   description: "เว็บเล็ก ๆ ที่ทำมาเพื่ออวยพรวันเกิดเพื่อนคนสำคัญ",
 
   icons: {
@@ -12,15 +13,17 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-    title: "🎂 สุขสันต์วันเกิดนะ!",
+    title: "🎂 สุขสันต์วันเกิด",
     description: "เว็บเล็ก ๆ ที่ทำมาเพื่ออวยพรวันเกิดเพื่อนคนสำคัญ",
+    url: "https://happy-birthday-teal-ten.vercel.app/",
+    siteName: "Birthday Site",
     images: ["/preview.png"],
     type: "website",
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "🎂 สุขสันต์วันเกิดนะ!",
+    title: "🎂 สุขสันต์วันเกิด",
     description: "เว็บเล็ก ๆ ที่ทำมาเพื่ออวยพรวันเกิดเพื่อนคนสำคัญ",
     images: ["/preview.png"],
   },
@@ -32,6 +35,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
+
+  themeColor: "#a855f7"
 };
 
 export default function RootLayout({
@@ -54,7 +59,7 @@ export default function RootLayout({
         />
       </head>
       <body style={{ fontFamily: "'Kanit', sans-serif" }}>
-        {children}
+        <ClientLoader>{children}</ClientLoader>
         <SpeedInsights />
         <Analytics />
       </body>

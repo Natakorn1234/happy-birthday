@@ -13,8 +13,20 @@ export default function FinalPage() {
   const [clickCount, setClickCount] = useState(0);
   const confettiRef = useRef<boolean>(false);
 
+  const lines = [
+    "ปีที่ผ่านมาอาจไม่ง่ายสำหรับเธอ",
+    "มีทั้งวันที่เหนื่อย และวันที่ไม่แน่ใจตัวเอง",
+    "แต่เธอก็ยังผ่านมาได้จนถึงตรงนี้",
+    "",
+    "แค่นี้ก็เก่งมากแล้วนะ",
+    "ไม่ต้องรีบดีขึ้น ไม่ต้องแข่งกับใคร",
+    "แค่ค่อย ๆ ใช้ชีวิตในจังหวะของตัวเองก็พอแล้ว",
+    "",
+    "ขอให้ปีนี้มีเรื่องดี ๆ ค่อย ๆ เข้ามา",
+    "และใจเธอเบาลงทีละนิด"
+  ];
+
   useEffect(() => {
-    // Generate floating hearts
     const h = Array.from({ length: 20 }, (_, i) => ({
       id: i,
       emoji: HEARTS[Math.floor(Math.random() * HEARTS.length)],
@@ -24,11 +36,9 @@ export default function FinalPage() {
     }));
     setHearts(h);
 
-    // Stagger reveal animations
     setTimeout(() => setShowMessage(true), 400);
     setTimeout(() => setShowButtons(true), 1200);
 
-    // Fire confetti
     if (!confettiRef.current) {
       confettiRef.current = true;
       launchConfetti();
@@ -64,7 +74,7 @@ export default function FinalPage() {
 
   return (
     <div
-      className="min-h-screen relative overflow-hidden flex flex-col items-center justify-center px-4 py-12"
+      className="min- h-screen relative overflow-hidden flex flex-col items-center justify-center px-4 py-12"
       style={{
         background: "linear-gradient(160deg, #0a0020, #1e003a, #0a0020)",
       }}
@@ -96,15 +106,12 @@ export default function FinalPage() {
         }}
       />
 
-      {/* Main content */}
       <div className="relative z-10 flex flex-col items-center gap-6 text-center max-w-sm w-full">
 
-        {/* Stars */}
         <div className="flex gap-2 text-3xl" style={{ animation: "bounce2 1s ease-in-out infinite" }}>
           ✨⭐✨
         </div>
 
-        {/* Giant heart button */}
         <button
           onClick={handleHeartClick}
           className="text-7xl cursor-pointer border-0 bg-transparent"
@@ -120,14 +127,14 @@ export default function FinalPage() {
         </button>
 
         {clickCount > 0 && (
-          <p className="text-pink-400 text-sm font-bold" style={{ animation: "popIn 0.3s ease forwards" }}>
-            กด {clickCount} ครั้งแล้ว! {clickCount > 5 ? "🥹 ขอบคุณที่อยู่ตรงนี้" : "🎉 ฉลองกันเลย!"}
+          <p className="text-pink-400 text-sm font-bold">
+            ส่งพลังใจแล้ว {clickCount} ครั้ง ✨
           </p>
         )}
 
-        {/* Main message */}
+        {/* MESSAGE (no typing anymore) */}
         {showMessage && (
-          <div style={{ animation: "popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards" }}>
+          <div style={{ animation: "popIn 0.7s ease forwards" }}>
             <h1
               className="font-black leading-tight mb-3"
               style={{
@@ -136,9 +143,7 @@ export default function FinalPage() {
                 textShadow: "4px 4px 0 #ffe600",
               }}
             >
-              HBD นะ
-              <br />
-              คนเก่ง!! 🎂
+              สุขสันต์วันเกิดนะ :)
             </h1>
 
             <div
@@ -150,37 +155,27 @@ export default function FinalPage() {
                 boxShadow: "0 0 30px rgba(255,45,120,0.3)",
               }}
             >
-              <p
-                className="font-bold text-xl leading-relaxed"
-                style={{ color: "#ffe600", textShadow: "0 0 10px rgba(255,230,0,0.5)" }}
-              >
-                สุขสันต์วันเกิดนะ ❤️🔥
+              <p className="text-white opacity-90 leading-relaxed text-base">
+                {lines.map((line, i) => (
+                  <span key={i}>
+                    {line}
+                    <br />
+                  </span>
+                ))}
               </p>
-              <p
-                className="text-white opacity-80 mt-3 leading-relaxed"
-                style={{ fontSize: "1rem" }}
-              >
-                ขอให้มีความสุขมาก ๆ นะ
-                <br />
-                ทุกสิ่งที่หวังไว้ ขอให้ได้สมใจ
-                <br />
-                ส่วนเรื่องที่ไม่อยากเจอ ก็ขอให้หายไปไกล ๆ 😂
-              </p>
-              <p
-                className="mt-3 font-black"
-                style={{ color: "#39ff14", fontSize: "1.1rem" }}
-              >
-                จากคนที่หวังดีกับคุณเสมอ 🫶
+
+              <p className="mt-4 text-white opacity-60 text-sm">
+                ขอบคุณที่ยังอยู่ตรงนี้นะ 🫶
               </p>
             </div>
           </div>
         )}
 
-        {/* Buttons */}
+        {/* BUTTONS */}
         {showButtons && (
           <div
             className="flex flex-col gap-3 w-full"
-            style={{ animation: "popIn 0.5s 0.3s ease forwards", opacity: 0 }}
+            style={{ animation: "popIn 0.5s ease forwards" }}
           >
             <button
               onClick={launchConfetti}
@@ -191,7 +186,7 @@ export default function FinalPage() {
                 boxShadow: "0 6px 0 #000",
               }}
             >
-              🎊 ปล่อยพลุอีกที!
+              ✨ เพิ่มความสุขอีกหน่อย
             </button>
 
             <button
@@ -203,12 +198,11 @@ export default function FinalPage() {
                 boxShadow: "0 6px 0 #000",
               }}
             >
-              🚀 วนอีกสักรอบ!
+              ย้อนกลับไปเริ่มใหม่ 🎁
             </button>
           </div>
         )}
 
-        {/* Footer message */}
         <p className="text-white opacity-30 text-xs mt-4">
           made with 💀 & ❤️ — Natakorn
         </p>
@@ -216,7 +210,7 @@ export default function FinalPage() {
 
       {/* Bottom decoration */}
       <div
-        className="absolute bottom-0 left-0 right-0 h-2"
+        className="fixed bottom-0 left-0 right-0 h-2"
         style={{
           background: "linear-gradient(90deg, #a855f7, #00cfff, #39ff14, #ffe600, #ff6b00, #ff2d78)",
           backgroundSize: "300% 100%",

@@ -66,7 +66,7 @@ const MESSAGES = [
   },
 ];
 
-const REACTIONS = ["😂", "🤣", "💀", "😭", "🔥", "😤", "🫡", "🤡"];
+const REACTIONS = ["✨", "💖", "🌙", "🫶", "🤍", "🌿", "💫"];
 
 export default function GiftPage() {
   const router = useRouter();
@@ -146,10 +146,10 @@ export default function GiftPage() {
             textShadow: "3px 3px 0 #ff2d78",
           }}
         >
-          คำอวยพรจากเพื่อน ❤️
+          พลังใจสำหรับวันนี้ 💖
         </h2>
         <p className="text-white opacity-50 text-sm mt-1">
-          เปิดคำอวยพรแล้ว {count} ครั้ง ✨ {count > 5 ? "อ่านเยอะ ๆ ได้ไม่จำกัด 💖" : ""}
+          หัวใจได้รับการเติมเต็ม {count} ครั้ง ✨ {count > 5 ? "อ่านเยอะ ๆ ได้ไม่จำกัด 💖" : ""}
         </p>
       </div>
 
@@ -214,7 +214,7 @@ export default function GiftPage() {
           minWidth: "240px",
         }}
       >
-        {isAnimating ? "✨ กำลังจัดคำดี ๆ ให้..." : "ขออีกคำ 💌"}
+        {isAnimating ? "✨ กำลังจัดคำดี ๆ ให้..." : "ขอฟังอีกหน่อย 🌙"}
       </button>
 
       {/* Counter badges */}
@@ -237,7 +237,7 @@ export default function GiftPage() {
           style={{ animation: "popIn 0.5s ease forwards" }}
         >
           <p className="text-white opacity-70 text-sm mb-3">
-            ยังไม่หมดนะ มีอะไรต่ออีก 👀
+            มีบางอย่างอยากบอกคุณต่อ…
           </p>
           <button
             onClick={() => router.push("/final")}
@@ -248,7 +248,7 @@ export default function GiftPage() {
               boxShadow: "0 6px 0 #000, 0 0 30px rgba(255,45,120,0.5)",
             }}
           >
-            ไปรับของขวัญสุดท้าย 🎊
+            เข้าสู่เซอร์ไพรส์สุดท้าย ✨
           </button>
         </div>
       )}

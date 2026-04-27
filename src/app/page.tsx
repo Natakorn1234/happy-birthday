@@ -5,6 +5,14 @@ import { useRouter } from "next/navigation";
 
 const FLOATING_EMOJIS = ["🎂", "🎉", "🎈", "🔥", "💥", "✨", "🎊", "💫", "⭐", "🌟"];
 
+const SECRET_MESSAGES = [
+  "🚨 อายุเพิ่มขึ้นอีก 1 ระดับ",
+  "✨ โบนัสความสุข +100",
+  "🎂 ระบบยืนยัน: วันนี้คือวันของคุณ",
+  "💸 โชคลาภกำลังโหลด...",
+  "🔥 ระบบประมวลผล: คุณน่ารักขึ้น 12%",
+];
+
 interface FloatingEmoji {
   id: number;
   emoji: string;
@@ -19,9 +27,10 @@ export default function HomePage() {
   const [clicked, setClicked] = useState(false);
   const [floaters, setFloaters] = useState<FloatingEmoji[]>([]);
   const [shake, setShake] = useState(false);
+  const [subtitle, setSubtitle] = useState("ของขวัญรออยู่ รีบกดเลย 👇");
 
   useEffect(() => {
-    const items: FloatingEmoji[] = Array.from({ length: 15 }, (_, i) => ({
+    const items: FloatingEmoji[] = Array.from({ length: 10 }, (_, i) => ({
       id: i,
       emoji: FLOATING_EMOJIS[Math.floor(Math.random() * FLOATING_EMOJIS.length)],
       left: `${Math.random() * 90}%`,
@@ -39,11 +48,16 @@ export default function HomePage() {
 
   const handleTitleClick = () => {
     setShake(true);
+
+    const msg = SECRET_MESSAGES[Math.floor(Math.random() * SECRET_MESSAGES.length)];
+    setSubtitle(msg);
+
     setTimeout(() => setShake(false), 500);
+    setTimeout(() => setSubtitle("ของขวัญรออยู่ รีบกดเลย 👇"), 2000);
   };
 
-  const topMarqueeText = "🎉 วันเกิดคุณแล้วนะ!! \u00a0\u00a0 🎂 สุขสันต์วันเกิดครับ \u00a0\u00a0 🔥 ฉลองเลยยย \u00a0\u00a0 🎈 อีกปีแล้วน้า \u00a0\u00a0 🌟 ขอให้ปีนี้เป็นปีที่ดีมาก ๆ \u00a0\u00a0\u00a0\u00a0";
-  const bottomMarqueeText = "💀 โตขึ้นมาอีกปีแล้วนะ \u00a0\u00a0 ปีนี้ขอให้รวยแบบไม่ทันตั้งตัว 💸 \u00a0\u00a0 และยังส่งกำลังใจให้เสมอ ❤️ \u00a0\u00a0 HBD เพื่อน!! 🎉 \u00a0\u00a0\u00a0\u00a0";
+  const topMarqueeText = "🎉 วันนี้คือวันของคุณ \u00a0\u00a0 🎂 โหมดฉลองเปิดใช้งาน \u00a0\u00a0 🚨 ตรวจพบวันเกิด \u00a0\u00a0 💀 แก่ขึ้นอีกปีแบบไม่ทันตั้งตัว \u00a0\u00a0 🌟 ปีนี้ต้องปัง \u00a0\u00a0\u00a0\u00a0";
+  const bottomMarqueeText = "💸 ขอให้รวยแบบงง ๆ \u00a0\u00a0 ❤️ กำลังใจถูกส่งถึงแล้ว \u00a0\u00a0 🗿 ผ่านการรับรองโดยสภาผู้แก่แห่งชาติ \u00a0\u00a0 🎉 วันนี้ห้ามเศร้าเด็ดขาด \u00a0\u00a0\u00a0\u00a0";
 
   return (
     <div
@@ -166,7 +180,7 @@ export default function HomePage() {
               letterSpacing: "-0.02em",
             }}
           >
-            🎉 คนพิเศษ!! 🎂
+            🚨 ตรวจพบวันเกิด!
           </h1>
         </div>
 
@@ -175,8 +189,8 @@ export default function HomePage() {
           className="font-bold text-lg max-w-xs"
           style={{ color: "#00cfff", textShadow: "0 0 10px #00cfff" }}
         >
-          เฮ้ยยย!! วันนี้วันเกิดแล้วนะ<br />
-          <span style={{ color: "#39ff14" }}>ของขวัญรออยู่ รีบกดเลย!!! 👇</span>
+          ภารกิจหลักวันนี้: ฉลองให้สุด 🎉<br />
+          <span className="text-base font-semibold" style={{ color: "#39ff14" }}>{subtitle}</span>
         </p>
 
         {/* CTA Button */}
@@ -197,7 +211,7 @@ export default function HomePage() {
             minWidth: "260px",
           }}
         >
-          {clicked ? "⏳ กำลังเปิดของขวัญ..." : "กดเพื่อรับของขวัญ 🎁"}
+          {clicked ? "⏳ กำลังเปิดของขวัญ..." : "เปิดของขวัญ 🎁"}
         </button>
 
         {/* Small note */}
@@ -205,7 +219,7 @@ export default function HomePage() {
           className="text-sm opacity-60"
           style={{ color: "#ffffff" }}
         >
-          (ปลอดภัย...มั้งนะ 😂)
+          (ผ่านการรับรองจากกรมวันเกิดแห่งชาติ)
         </p>
 
         {/* Tap title hint */}
@@ -213,7 +227,7 @@ export default function HomePage() {
           className="text-xs opacity-40 mt-2"
           style={{ color: "#ffe600" }}
         >
-          แอบมีอะไรซ่อนอยู่ 👆
+          ลองแตะดูสิ 👆
         </p>
       </div>
 
