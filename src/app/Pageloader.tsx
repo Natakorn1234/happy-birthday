@@ -15,10 +15,9 @@ const PANIC_STEPS = [
   { text: "เอ๊ะ... ทำไมมันค้างวะ 🤨", emoji: "😐" },
   { text: "อย่าปิดนะ กำลังงงอยู่ 😅", emoji: "😅" },
   { text: "99% แล้ว แต่ใจยังไม่ถึง 💀", emoji: "💀" },
-  { text: "คือมันจะไปต่อไหมอะ หรือจะค้างตรงนี้เลย 😭", emoji: "😭" },
+  { text: "มันจะไปต่อไหมอะ หรือจะค้างตรงนี้เลย 😭", emoji: "😭" },
   { text: "อยู่มั้ยเพื่อน… อย่าทิ้งกัน 🥺", emoji: "🥺" },
   { text: "ระบบกำลัง “อิน” กับวันเกิดอยู่ 🎂", emoji: "🛠️" },
-  { text: "ถ้าปิดคือร้องไห้จริงนะ 😤", emoji: "😤" },
   { text: "server: 99% (แต่ใจ 0%)", emoji: "🧠" },
 ];
 
@@ -97,7 +96,7 @@ export default function PageLoader({ onDone }: { onDone: () => void }) {
         clearInterval(msgTimer);
         setTimeout(() => setPhase("boom"), 400);
       }
-    }, 2000);
+    }, 1200);
 
     return () => clearInterval(msgTimer);
   }, [phase]);
