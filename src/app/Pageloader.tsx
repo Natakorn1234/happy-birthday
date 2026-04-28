@@ -3,10 +3,23 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-const LOAD_STEPS = [
+// Phase 1: normal steps while bar fills to 99%
+// Phase 2: bar FREEZES at 99% — panic messages loop for ~6 seconds
+// Phase 3: BOOM — slams to 100% and exits
+const NORMAL_STEPS = [
   { text: "กำลังเตรียมของขวัญ...", emoji: "🎁" },
   { text: "จุดเทียนวันเกิด...", emoji: "🕯️" },
-  { text: "พร้อมแล้ว! ไปกันเลย", emoji: "🔥" },
+];
+
+const PANIC_STEPS = [
+  { text: "เอ๊ะ... ทำไมมันค้างวะ 🤨", emoji: "😐" },
+  { text: "อย่าปิดนะ กำลังงงอยู่ 😅", emoji: "😅" },
+  { text: "99% แล้ว แต่ใจยังไม่ถึง 💀", emoji: "💀" },
+  { text: "คือมันจะไปต่อไหมอะ หรือจะค้างตรงนี้เลย 😭", emoji: "😭" },
+  { text: "อยู่มั้ยเพื่อน… อย่าทิ้งกัน 🥺", emoji: "🥺" },
+  { text: "ระบบกำลัง “อิน” กับวันเกิดอยู่ 🎂", emoji: "🛠️" },
+  { text: "ถ้าปิดคือร้องไห้จริงนะ 😤", emoji: "😤" },
+  { text: "server: 99% (แต่ใจ 0%)", emoji: "🧠" },
 ];
 
 const PARTICLE_EMOJIS = ["🎂", "🎉", "✨", "🎈", "💫", "⭐", "🎊", "💥"];
@@ -20,53 +33,94 @@ interface Particle {
   size: string;
 }
 
+type Phase = "filling" | "stuck" | "boom";
+
 export default function PageLoader({ onDone }: { onDone: () => void }) {
-  const [step, setStep] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [phase, setPhase] = useState<Phase>("filling");
+  const [stepIndex, setStepIndex] = useState(0);
+  const [panicIndex, setPanicIndex] = useState(0);
   const [particles, setParticles] = useState<Particle[]>([]);
   const [exiting, setExiting] = useState(false);
+  const [shake, setShake] = useState(false);
 
-  // Generate particles once on mount
   useEffect(() => {
     setParticles(
-      Array.from({ length: 16 }, (_, i) => ({
+      Array.from({ length: 8 }, (_, i) => ({
         id: i,
         emoji: PARTICLE_EMOJIS[i % PARTICLE_EMOJIS.length],
-        x: `${Math.random() * 90}%`,
-        delay: Math.random() * 2,
-        duration: 2.5 + Math.random() * 2,
-        size: `${1.2 + Math.random() * 1.4}rem`,
+        x: `${10 + i * 11}%`,
+        delay: i * 0.4,
+        duration: 3 + (i % 3),
+        size: `${1.4 + (i % 3) * 0.4}rem`,
       }))
     );
   }, []);
 
-  // Drive progress bar + step text
+  // Phase 1: fill bar from 0 → 99 in ~2.5s
   useEffect(() => {
-    const totalMs = 4200;
-    const interval = 25;
-    let elapsed = 0;
+    if (phase !== "filling") return;
 
-    const timer = setInterval(() => {
-      elapsed += interval;
-      const pct = Math.min((elapsed / totalMs) * 100, 100);
-      setProgress(pct);
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 40 && stepIndex < 1) setStepIndex(1);
+        if (prev >= 99) {
+          clearInterval(interval);
+          setTimeout(() => setPhase("stuck"), 300);
+          return 99;
+        }
+        return Math.min(prev + 1.2, 99);
+      });
+    }, 30);
 
-      if (pct >= 33 && step < 1) setStep(1);
-      if (pct >= 66 && step < 2) setStep(2);
-
-      if (pct >= 100) {
-        clearInterval(timer);
-        // Brief pause at 100% before exit
-        setTimeout(() => {
-          setExiting(true);
-          setTimeout(onDone, 700);
-        }, 600);
-      }
-    }, interval);
-
-    return () => clearInterval(timer);
+    return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [phase]);
+
+  // Phase 2: stuck at 99% — cycle panic messages, shake bar
+  useEffect(() => {
+    if (phase !== "stuck") return;
+
+    let i = 0;
+    const msgTimer = setInterval(() => {
+      i++;
+      setPanicIndex((prev) => (prev + 1) % PANIC_STEPS.length);
+
+      // Shake bar every other message
+      if (i % 2 === 0) {
+        setShake(true);
+        setTimeout(() => setShake(false), 500);
+      }
+
+      // After 7 panic messages (~14s), trigger BOOM
+      if (i >= 7) {
+        clearInterval(msgTimer);
+        setTimeout(() => setPhase("boom"), 400);
+      }
+    }, 2000);
+
+    return () => clearInterval(msgTimer);
+  }, [phase]);
+
+  // Phase 3: BOOM — slam to 100% and exit
+  useEffect(() => {
+    if (phase !== "boom") return;
+    setProgress(100);
+    setTimeout(() => {
+      setExiting(true);
+      setTimeout(onDone, 600);
+    }, 800);
+  }, [phase, onDone]);
+
+  const isStuck = phase === "stuck";
+  const isBoom = phase === "boom";
+
+  const currentLabel =
+    phase === "filling"
+      ? NORMAL_STEPS[stepIndex]
+      : phase === "stuck"
+      ? PANIC_STEPS[panicIndex]
+      : { text: "โอเค ไปกันเลย HAPPY BIRTHDAY!! 🚀", emoji: "🔥" };
 
   return (
     <AnimatePresence>
@@ -74,30 +128,37 @@ export default function PageLoader({ onDone }: { onDone: () => void }) {
         <motion.div
           key="loader"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 1.04 }}
-          transition={{ duration: 0.45, ease: "easeInOut" }}
+          exit={{ opacity: 0, scale: 1.06 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
           className="fixed inset-0 z-50 flex flex-col items-center justify-center overflow-hidden select-none"
           style={{ background: "linear-gradient(135deg, #1a0030, #3d0060, #1a0030)" }}
         >
-          {/* Animated bg blobs — same as home page */}
+          {/* Bg blobs — turns orange/frantic when stuck */}
           <div className="absolute inset-0 pointer-events-none">
             <motion.div
-              className="absolute rounded-full blur-3xl opacity-40"
-              style={{ width: 280, height: 280, background: "#ff2d78", top: -70, left: -70 }}
-              animate={{ y: [0, -18, 0], x: [0, 10, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute rounded-full opacity-40"
+              style={{
+                width: 240, height: 240,
+                background: isStuck ? "#ff6b00" : "#ff2d78",
+                top: -60, left: -60,
+                filter: "blur(60px)",
+                willChange: "transform",
+                transition: "background 0.5s",
+              }}
+              animate={{ y: [0, -16, 0] }}
+              transition={{ duration: isStuck ? 0.5 : 5, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div
-              className="absolute rounded-full blur-3xl opacity-25"
-              style={{ width: 230, height: 230, background: "#ffe600", bottom: -50, right: -50 }}
-              animate={{ y: [0, 18, 0], x: [0, -10, 0] }}
+              className="absolute rounded-full opacity-25"
+              style={{
+                width: 200, height: 200,
+                background: "#ffe600",
+                bottom: -40, right: -40,
+                filter: "blur(60px)",
+                willChange: "transform",
+              }}
+              animate={{ y: [0, 16, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-            />
-            <motion.div
-              className="absolute rounded-full blur-3xl opacity-25"
-              style={{ width: 180, height: 180, background: "#00cfff", top: "45%", right: -40 }}
-              animate={{ y: [0, -14, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
             />
           </div>
 
@@ -106,14 +167,9 @@ export default function PageLoader({ onDone }: { onDone: () => void }) {
             <motion.span
               key={p.id}
               className="absolute pointer-events-none"
-              style={{ left: p.x, bottom: -40, fontSize: p.size, zIndex: 1 }}
-              animate={{ y: [0, -(typeof window !== "undefined" ? window.innerHeight + 80 : 800)], rotate: [0, 360] }}
-              transition={{
-                duration: p.duration,
-                delay: p.delay,
-                repeat: Infinity,
-                ease: "linear",
-              }}
+              style={{ left: p.x, bottom: -40, fontSize: p.size, zIndex: 1, willChange: "transform" }}
+              animate={{ y: -900 }}
+              transition={{ duration: p.duration, delay: p.delay, repeat: Infinity, ease: "linear" }}
             >
               {p.emoji}
             </motion.span>
@@ -131,30 +187,40 @@ export default function PageLoader({ onDone }: { onDone: () => void }) {
 
           {/* Centre content */}
           <div className="relative z-10 flex flex-col items-center gap-6 px-6 w-full max-w-xs">
-            {/* Big bouncing cake */}
+
+            {/* Cake emoji — panics when stuck, explodes on boom */}
             <motion.div
               className="text-7xl"
-              animate={{ y: [0, -18, 0], rotate: [-4, 4, -4] }}
-              transition={{ duration: 1.1, repeat: Infinity, ease: "easeInOut" }}
+              style={{ willChange: "transform" }}
+              animate={
+                isBoom
+                  ? { scale: [1, 1.8, 0.7, 1.3, 1], rotate: [0, -20, 20, -10, 0] }
+                  : isStuck
+                  ? { rotate: [-8, 8, -8] }
+                  : { y: [0, -16, 0] }
+              }
+              transition={
+                isBoom
+                  ? { duration: 0.6, ease: "easeOut" }
+                  : { duration: isStuck ? 0.3 : 1.1, repeat: Infinity, ease: "easeInOut" }
+              }
             >
-              🎂
+              {isBoom ? "🎉" : isStuck ? "😰" : "🎂"}
             </motion.div>
 
             {/* Title */}
             <div className="text-center">
-              <motion.h1
+              <h1
                 className="font-black leading-tight"
                 style={{
                   fontSize: "clamp(1.8rem, 7vw, 2.6rem)",
                   color: "#ffe600",
                   textShadow: "4px 4px 0 #ff2d78, 8px 8px 0 rgba(0,0,0,0.25)",
                 }}
-                animate={{ scale: [1, 1.03, 1] }}
-                transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
               >
                 สุขสันต์วันเกิด
-              </motion.h1>
-              <motion.h2
+              </h1>
+              <h2
                 className="font-black"
                 style={{
                   fontSize: "clamp(1.4rem, 6vw, 2rem)",
@@ -163,63 +229,98 @@ export default function PageLoader({ onDone }: { onDone: () => void }) {
                 }}
               >
                 ตัวเอกของวันนี้ 🎉
-              </motion.h2>
+              </h2>
             </div>
 
-            {/* Step label */}
+            {/* Status label — fades between messages */}
             <AnimatePresence mode="wait">
               <motion.div
-                key={step}
+                key={`${phase}-${isStuck ? panicIndex : stepIndex}`}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.3 }}
-                className="flex items-center gap-2"
+                transition={{ duration: 0.35 }}
+                className="flex items-center gap-2 min-h-[28px]"
               >
-                <span className="text-xl">{LOAD_STEPS[step].emoji}</span>
+                <span className="text-xl">{currentLabel.emoji}</span>
                 <span
                   className="font-bold text-sm"
-                  style={{ color: "#00cfff", textShadow: "0 0 8px #00cfff" }}
+                  style={{
+                    color: isStuck ? "#ff6b00" : isBoom ? "#39ff14" : "#00cfff",
+                    textShadow: `0 0 8px ${isStuck ? "#ff6b00" : isBoom ? "#39ff14" : "#00cfff"}`,
+                  }}
                 >
-                  {LOAD_STEPS[step].text}
+                  {currentLabel.text}
                 </span>
               </motion.div>
             </AnimatePresence>
 
-            {/* Progress bar */}
+            {/* Progress bar — shakes when stuck */}
             <div className="w-full">
-              <div
-                className="w-full rounded-full overflow-hidden border-2 border-black"
-                style={{ height: "14px", background: "rgba(255,255,255,0.08)" }}
+              <motion.div
+                animate={shake ? { x: [-5, 5, -4, 4, -2, 2, 0] } : { x: 0 }}
+                transition={{ duration: 0.4 }}
               >
-                <motion.div
-                  className="h-full rounded-full"
-                  style={{
-                    background: "linear-gradient(90deg, #ff2d78, #ff6b00, #ffe600)",
-                    boxShadow: "0 0 12px rgba(255,45,120,0.7)",
-                    width: `${progress}%`,
-                  }}
-                  transition={{ ease: "linear" }}
-                />
-              </div>
-              {/* Percent label */}
-              <motion.p
-                className="text-right font-black text-xs mt-1"
-                style={{ color: "#ffe600" }}
-              >
-                {Math.round(progress)}%
-              </motion.p>
+                <div
+                  className="w-full rounded-full overflow-hidden border-2 border-black"
+                  style={{ height: "14px", background: "rgba(255,255,255,0.08)" }}
+                >
+                  <div
+                    className="h-full rounded-full"
+                    style={{
+                      width: `${progress}%`,
+                      background: isBoom
+                        ? "linear-gradient(90deg, #39ff14, #00cfff)"
+                        : isStuck
+                        ? "linear-gradient(90deg, #ff6b00, #ff2d78)"
+                        : "linear-gradient(90deg, #ff2d78, #ff6b00, #ffe600)",
+                      boxShadow: isBoom
+                        ? "0 0 20px rgba(57,255,20,0.9)"
+                        : isStuck
+                        ? "0 0 14px rgba(255,107,0,0.9)"
+                        : "0 0 10px rgba(255,45,120,0.6)",
+                      transition: isBoom
+                        ? "width 0.5s cubic-bezier(0.22,1,0.36,1), background 0.3s, box-shadow 0.3s"
+                        : "width 0.08s linear, background 0.3s, box-shadow 0.3s",
+                    }}
+                  />
+                </div>
+
+                {/* Percent row */}
+                <div className="flex justify-between items-center mt-1">
+                  <span
+                    className="font-black text-xs"
+                    style={{ color: isStuck ? "#ff6b00" : "transparent" }}
+                  >
+                    {isStuck ? "⚠️ ค้างอยู่ที่..." : "​"}
+                  </span>
+                  <span
+                    className="font-black text-xs"
+                    style={{
+                      color: isStuck ? "#ff6b00" : isBoom ? "#39ff14" : "#ffe600",
+                    }}
+                  >
+                    {Math.round(progress)}%{isStuck ? " 😭" : ""}
+                  </span>
+                </div>
+              </motion.div>
             </div>
 
-            {/* Pulsing dots */}
+            {/* Pulsing dots — go frantic when stuck */}
             <div className="flex gap-3">
-              {[0, 1, 2].map((i) => (
-                <motion.div
+              {(["#ff2d78", "#ffe600", "#39ff14"] as const).map((color, i) => (
+                <div
                   key={i}
                   className="rounded-full border-2 border-black"
-                  style={{ width: 12, height: 12, background: ["#ff2d78", "#ffe600", "#39ff14"][i] }}
-                  animate={{ scale: [1, 1.6, 1], opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 0.9, repeat: Infinity, delay: i * 0.2, ease: "easeInOut" }}
+                  style={{
+                    width: 12,
+                    height: 12,
+                    background: isStuck ? "#ff6b00" : isBoom ? "#39ff14" : color,
+                    animation: isStuck
+                      ? `pulseGlow 0.25s ${i * 0.05}s ease-in-out infinite`
+                      : `pulseGlow 0.9s ${i * 0.2}s ease-in-out infinite`,
+                    transition: "background 0.3s",
+                  }}
                 />
               ))}
             </div>

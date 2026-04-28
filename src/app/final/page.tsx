@@ -11,22 +11,27 @@ export default function FinalPage() {
   const [showMessage, setShowMessage] = useState(false);
   const [showButtons, setShowButtons] = useState(false);
   const [clickCount, setClickCount] = useState(0);
+  const [name, setName] = useState("");
   const confettiRef = useRef<boolean>(false);
 
   const lines = [
-    "ปีที่ผ่านมาอาจไม่ง่ายสำหรับเธอ",
-    "มีทั้งวันที่เหนื่อย และวันที่ไม่แน่ใจตัวเอง",
-    "แต่เธอก็ยังผ่านมาได้จนถึงตรงนี้",
+    "ปีที่ผ่านมาอาจไม่ง่ายเท่าไหร่",
+    "มีทั้งวันที่เหนื่อย และไม่เข้าใจตัวเอง",
+    "แต่เธอก็ยังผ่านมาได้จนถึงตอนนี้",
     "",
-    "แค่นี้ก็เก่งมากแล้วนะ",
+    "แค่นี้ก็เก่งมากแล้วจริง ๆ",
     "ไม่ต้องรีบดีขึ้น ไม่ต้องแข่งกับใคร",
-    "แค่ค่อย ๆ ใช้ชีวิตในจังหวะของตัวเองก็พอแล้ว",
+    "ค่อย ๆ ใช้ชีวิตในแบบของตัวเองก็พอ",
     "",
-    "ขอให้ปีนี้มีเรื่องดี ๆ ค่อย ๆ เข้ามา",
-    "และใจเธอเบาลงทีละนิด"
+    "ขอให้ปีนี้ใจเบาลงทีละนิด",
+    "และมีเรื่องดี ๆ เข้ามาแบบไม่ต้องพยายาม",
   ];
 
   useEffect(() => {
+    // Pull name from sessionStorage — set by home page
+    const saved = sessionStorage.getItem("birthdayName");
+    if (saved) setName(saved);
+
     const h = Array.from({ length: 20 }, (_, i) => ({
       id: i,
       emoji: HEARTS[Math.floor(Math.random() * HEARTS.length)],
@@ -48,15 +53,9 @@ export default function FinalPage() {
   const launchConfetti = async () => {
     try {
       const confetti = (await import("canvas-confetti")).default;
-
       const fire = (particleRatio: number, opts: Record<string, unknown>) => {
-        confetti({
-          origin: { y: 0.6 },
-          ...opts,
-          particleCount: Math.floor(200 * particleRatio),
-        });
+        confetti({ origin: { y: 0.6 }, ...opts, particleCount: Math.floor(200 * particleRatio) });
       };
-
       fire(0.25, { spread: 26, startVelocity: 55 });
       fire(0.2, { spread: 60 });
       fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
@@ -75,9 +74,7 @@ export default function FinalPage() {
   return (
     <div
       className="min-h-screen relative overflow-hidden flex flex-col items-center justify-center px-4 py-12 md:py-12"
-      style={{
-        background: "linear-gradient(160deg, #0a0020, #1e003a, #0a0020)",
-      }}
+      style={{ background: "linear-gradient(160deg, #0a0020, #1e003a, #0a0020)" }}
     >
       {/* Floating hearts */}
       {hearts.map((h) => (
@@ -128,13 +125,14 @@ export default function FinalPage() {
 
         {clickCount > 0 && (
           <p className="text-pink-400 text-sm font-bold">
-            ส่งพลังใจแล้ว {clickCount} ครั้ง ✨ {clickCount > 5 ? "🥹 ขอบคุณที่อยู่จนจบ" : "🎉 ความสุขกำลังเพิ่มขึ้น!"}
+            ส่งพลังใจแล้ว {clickCount} ครั้ง ✨{" "}
+            {clickCount > 5 ? "🥹 ขอบคุณที่อยู่จนจบ" : "🎉 ความสุขกำลังเพิ่มขึ้น!"}
           </p>
         )}
 
-        {/* MESSAGE (no typing anymore) */}
         {showMessage && (
           <div style={{ animation: "popIn 0.7s ease forwards" }}>
+            {/* Personalized heading — shows name if available */}
             <h1
               className="font-black leading-tight mb-3"
               style={{
@@ -143,7 +141,7 @@ export default function FinalPage() {
                 textShadow: "4px 4px 0 #ffe600",
               }}
             >
-              สุขสันต์วันเกิดนะ :)
+              {name ? `อีกหนึ่งปีของ${name}` : "สุขสันต์วันเกิดนะ :)"}
             </h1>
 
             <div
@@ -158,20 +156,22 @@ export default function FinalPage() {
               <p className="text-white opacity-90 leading-relaxed text-base">
                 {lines.map((line, i) => (
                   <span key={i}>
-                    {line}
+                    {/* Inject name into the meaningful line */}
+                    {line === "แค่นี้ก็เก่งมากแล้วนะ" && name
+                      ? `${name}เก่งมากจริง ๆ`
+                      : line}
                     <br />
                   </span>
                 ))}
               </p>
 
-              <p className="mt-4 text-white opacity-60 text-sm">
-                ขอบคุณที่ยังอยู่ตรงนี้นะ 🫶
+              <p className="mt-4 font-bold" style={{ color: "#ffe600" }}>
+                {name ? `ขอบคุณ${name}ที่ยังอยู่ตรงนี้นะ 🫶` : "ขอบคุณที่ยังอยู่ตรงนี้นะ 🫶"}
               </p>
             </div>
           </div>
         )}
 
-        {/* BUTTONS */}
         {showButtons && (
           <div
             className="flex flex-col gap-3 w-full"
