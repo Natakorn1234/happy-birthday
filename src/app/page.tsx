@@ -15,6 +15,29 @@ const SECRET_MESSAGES = [
   "โอเค ข้อมูลถูก leak แล้ว 👀",
 ];
 
+// ─── Bad word filter ───────────────────────────────────────────
+const BAD_WORDS = [
+  // Thai
+  "ควย", "หี", "เย็ด", "สัส", "เหี้ย", "ระยำ", "ชิบหาย", "สาด", "ไอ้สัส", "อีสัส", "อีสัตว์", "ไอสัตว์", "แตด",
+  // English
+  "fuck", "shit", "ass", "dick", "pussy", "bitch", "cunt", "cock", "bastard", "whore", "slut", "damn",
+];
+
+const BLOCKED_REACTIONS = [
+  "ใส่ชื่อจริงมาเลย อย่าเอาของนั้นมาใส่ 😭",
+  "ระบบปฏิเสธ: ชื่อนี้ไม่ผ่าน QC 🚫",
+  "เฮ้ยยย!! ใช้ชื่อที่แม่ตั้งให้มาเลยดิ 😤",
+  "ไม่ผ่าน!! พิมพ์ชื่อจริงมาสิ 🙅",
+  "โอ้โห... ชื่ออะไรเนี้ย ลองใหม่นะ 💀",
+  "🚨 ชื่อนี้ถูกแบนโดยกรมชื่อแห่งชาติ",
+];
+
+const isBadWord = (input: string): boolean => {
+  const normalized = input.toLowerCase().replace(/\s/g, "");
+  return BAD_WORDS.some((word) => normalized.includes(word.toLowerCase()));
+};
+// ──────────────────────────────────────────────────────────────
+
 interface FloatingEmoji {
   id: number;
   emoji: string;
@@ -37,6 +60,7 @@ export default function HomePage() {
   const [nameInput, setNameInput] = useState("");
   const [nameSubmitted, setNameSubmitted] = useState(false);
   const [inputShake, setInputShake] = useState(false);
+  const [inputError, setInputError] = useState("");
 
   useEffect(() => {
     const items: FloatingEmoji[] = Array.from({ length: 10 }, (_, i) => ({
@@ -49,7 +73,6 @@ export default function HomePage() {
     }));
     setFloaters(items);
 
-    // Restore name from session so they don't re-enter after navigating back
     const saved = sessionStorage.getItem("birthdayName");
     if (saved) {
       setName(saved);
@@ -60,14 +83,34 @@ export default function HomePage() {
 
   const handleNameSubmit = () => {
     const trimmed = nameInput.trim();
+
+    // Empty check
     if (!trimmed) {
-      setInputShake(true);
-      setTimeout(() => setInputShake(false), 500);
+      setInputError("พิมพ์ชื่อก่อนนะ ว่างเปล่าไม่ได้ 😤");
+      triggerInputShake();
       return;
     }
+
+    // Bad word check
+    if (isBadWord(trimmed)) {
+      const reaction = BLOCKED_REACTIONS[Math.floor(Math.random() * BLOCKED_REACTIONS.length)];
+      setInputError(reaction);
+      setNameInput(""); // wipe the bad word
+      triggerInputShake();
+      setTimeout(() => setInputError(""), 3500);
+      return;
+    }
+
+    // All good — save and proceed
+    setInputError("");
     setName(trimmed);
     sessionStorage.setItem("birthdayName", trimmed);
     setNameSubmitted(true);
+  };
+
+  const triggerInputShake = () => {
+    setInputShake(true);
+    setTimeout(() => setInputShake(false), 500);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -126,16 +169,10 @@ export default function HomePage() {
           <div className="text-7xl" style={{ animation: "bounce2 1s ease-in-out infinite" }}>🤔</div>
 
           <div>
-            <h1
-              className="font-black leading-tight"
-              style={{ fontSize: "clamp(1.8rem, 7vw, 2.6rem)", color: "#ffe600", textShadow: "4px 4px 0px #ff2d78" }}
-            >
+            <h1 className="font-black leading-tight" style={{ fontSize: "clamp(1.8rem, 7vw, 2.6rem)", color: "#ffe600", textShadow: "4px 4px 0px #ff2d78" }}>
               เอ้า เดี๋ยวๆ ใครเนี้ย 😤
             </h1>
-            <p
-              className="font-black mt-1"
-              style={{ fontSize: "clamp(1.2rem, 5vw, 1.8rem)", color: "#ff2d78", textShadow: "3px 3px 0 #ffe600" }}
-            >
+            <p className="font-black mt-1" style={{ fontSize: "clamp(1.2rem, 5vw, 1.8rem)", color: "#ff2d78", textShadow: "3px 3px 0 #ffe600" }}>
               ขอชื่อก่อนดิ 😎
             </p>
           </div>
@@ -144,28 +181,49 @@ export default function HomePage() {
             (ระบบ: ยังไม่อนุญาตให้เข้าถ้ายังไม่บอกชื่อ)
           </p>
 
-          {/* Input box */}
           <div className="w-full flex flex-col gap-3">
             <input
               type="text"
               value={nameInput}
-              onChange={(e) => setNameInput(e.target.value)}
+              onChange={(e) => {
+                setNameInput(e.target.value);
+                if (inputError) setInputError(""); // clear error as they retype
+              }}
               onKeyDown={handleKeyDown}
               maxLength={20}
               placeholder="ชื่อเล่นก็ได้ ไม่ต้องจริงจัง 😎"
               autoFocus
-              className="w-full rounded-2xl px-5 py-4 font-black text-xl text-center border-4 border-black outline-none"
+              className="w-full rounded-2xl px-5 py-4 font-black text-xl text-center border-4 outline-none"
               style={{
                 background: "rgba(255,255,255,0.1)",
                 color: "#ffe600",
                 caretColor: "#ff2d78",
+                borderColor: inputError ? "#ff2d78" : "black",
                 boxShadow: inputShake
-                  ? "0 0 0 4px #ff2d78, 0 0 20px rgba(255,45,120,0.5)"
+                  ? "0 0 0 4px #ff2d78, 0 0 25px rgba(255,45,120,0.9)"
+                  : inputError
+                  ? "0 0 0 3px rgba(255,45,120,0.5)"
                   : "0 0 20px rgba(255,230,0,0.25)",
                 animation: inputShake ? "shake 0.5s ease-in-out" : "none",
-                transition: "box-shadow 0.2s",
+                transition: "box-shadow 0.2s, border-color 0.2s",
               }}
             />
+
+            {/* Error bubble — animates in on block */}
+            {inputError && (
+              <div
+                className="rounded-2xl px-4 py-3 border-2 border-black font-bold text-sm text-center"
+                style={{
+                  background: "rgba(255,45,120,0.2)",
+                  color: "#ff2d78",
+                  textShadow: "0 0 8px rgba(255,45,120,0.5)",
+                  animation: "popIn 0.3s ease forwards",
+                  boxShadow: "0 0 15px rgba(255,45,120,0.3)",
+                }}
+              >
+                🚫 {inputError}
+              </div>
+            )}
 
             <button
               onClick={handleNameSubmit}
@@ -191,33 +249,24 @@ export default function HomePage() {
 
           <div className="text-8xl" style={{ animation: "bounce2 1s ease-in-out infinite" }}>🎂</div>
 
-          {/* Personalized title */}
           <div
             onClick={handleTitleClick}
             className="cursor-pointer select-none"
             style={{ animation: shake ? "shake 0.5s ease-in-out" : "none" }}
           >
-            <h1
-              className="font-black leading-tight"
-              style={{ fontSize: "clamp(2rem, 8vw, 3.5rem)", color: "#ffe600", textShadow: "4px 4px 0px #ff2d78, 8px 8px 0px rgba(0,0,0,0.3)", letterSpacing: "-0.02em" }}
-            >
+            <h1 className="font-black leading-tight" style={{ fontSize: "clamp(2rem, 8vw, 3.5rem)", color: "#ffe600", textShadow: "4px 4px 0px #ff2d78, 8px 8px 0px rgba(0,0,0,0.3)", letterSpacing: "-0.02em" }}>
               ยินดีด้วย {name}...
             </h1>
-            <h1
-              className="font-black leading-tight"
-              style={{ fontSize: "clamp(2.2rem, 9vw, 3.8rem)", color: "#ff2d78", textShadow: "4px 4px 0px #ffe600, 8px 8px 0px rgba(0,0,0,0.3)", letterSpacing: "-0.02em" }}
-            >
+            <h1 className="font-black leading-tight" style={{ fontSize: "clamp(2.2rem, 9vw, 3.8rem)", color: "#ff2d78", textShadow: "4px 4px 0px #ffe600, 8px 8px 0px rgba(0,0,0,0.3)", letterSpacing: "-0.02em" }}>
               ยังรอดมาอีกปี 😭
             </h1>
           </div>
 
-          {/* Subtitle */}
           <p className="font-bold text-lg max-w-xs" style={{ color: "#00cfff", textShadow: "0 0 10px #00cfff" }}>
             ภารกิจหลักวันนี้: ฉลองให้สุด 🎉<br />
             <span className="text-base font-semibold" style={{ color: "#39ff14" }}>{subtitle}</span>
           </p>
 
-          {/* CTA Button — shows name */}
           <button
             onClick={handleClick}
             disabled={clicked}
@@ -234,12 +283,8 @@ export default function HomePage() {
             {clicked ? "⏳ กำลังเปิดของขวัญ..." : `ไปเปิดของขวัญของ${name} 🎁`}
           </button>
 
-          {/* Change name */}
           <button
-            onClick={() => {
-              setNameSubmitted(false);
-              setNameInput(name);
-            }}
+            onClick={() => { setNameSubmitted(false); setNameInput(name); setInputError(""); }}
             className="text-xs underline"
             style={{ color: "#ffffff", opacity: 0.35 }}
           >
