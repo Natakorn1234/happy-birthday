@@ -18,6 +18,9 @@ Instead of just reading a message, the user moves through a small emotional jour
 - 🎁 **Gift** → randomized soft emotional messages
 - 🌙 **Final** → heartfelt ending with confetti + personalized message
 
+**Special Feature:**
+- ⏳ **Creative Loader** → A custom "fake" loading screen that purposefully freezes at 99% for comedic effect.
+
 The goal is simple:  
 **make someone feel something, even for a few seconds.**
 
@@ -87,6 +90,17 @@ This is a small experimental project to explore:
 - playful frontend experiences
 
 Built to be shared, not just viewed.
+
+---
+
+## ⚡ Performance Optimization (Roadmap)
+
+To further enhance the experience, here are some planned optimizations:
+
+- **Next.js Font Optimization:** Move from standard `<link>` tags to `next/font/google` for better LCP.
+- **GPU-Accelerated Animations:** Shift from `top/left` animations to `translate3d` to reduce layout reflows.
+- **Dynamic Imports:** Further optimize bundle size by lazy-loading heavy animation libraries.
+- **Hydration Smoothing:** Refine the `mounted` state logic to prevent minor flickers during session loading.
 
 ---
 
