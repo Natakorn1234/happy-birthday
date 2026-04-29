@@ -190,7 +190,7 @@ export default function FinalPage() {
             </button>
 
             <button
-              onClick={() => router.push("/")}
+              onClick={() => router.push("/home")}
               className="btn-chaos font-black rounded-2xl px-8 py-4 text-lg border-4 border-black w-full"
               style={{
                 background: "linear-gradient(135deg, #00cfff, #a855f7)",

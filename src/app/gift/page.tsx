@@ -260,7 +260,7 @@ export default function GiftPage() {
 
       {/* Back link */}
       <button
-        onClick={() => router.push("/")}
+        onClick={() => router.push("/home")}
         className="mt-6 text-sm opacity-40 text-white underline"
       >
         ← กลับหน้าแรก
