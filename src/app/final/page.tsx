@@ -2,8 +2,16 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { customWishes, defaultWish } from "../wishes.config";
 
 const HEARTS = ["❤️", "🧡", "💛", "💚", "💙", "💜", "🖤", "🤍", "💕", "💞", "💓", "💗"];
+
+// Find a custom wish by name (case-insensitive, trims spaces)
+const getWish = (name: string) => {
+  return customWishes.find(
+    (w) => w.name.trim().toLowerCase() === name.trim().toLowerCase()
+  ) ?? null;
+};
 
 export default function FinalPage() {
   const router = useRouter();
@@ -14,21 +22,7 @@ export default function FinalPage() {
   const [name, setName] = useState("");
   const confettiRef = useRef<boolean>(false);
 
-  const lines = [
-    "ปีที่ผ่านมาอาจไม่ง่ายเท่าไหร่",
-    "มีทั้งวันที่เหนื่อย และไม่เข้าใจตัวเอง",
-    "แต่เธอก็ยังผ่านมาได้จนถึงตอนนี้",
-    "",
-    "แค่นี้ก็เก่งมากแล้วจริง ๆ",
-    "ไม่ต้องรีบดีขึ้น ไม่ต้องแข่งกับใคร",
-    "ค่อย ๆ ใช้ชีวิตในแบบของตัวเองก็พอ",
-    "",
-    "ขอให้ปีนี้ใจเบาลงทีละนิด",
-    "และมีเรื่องดี ๆ เข้ามาแบบไม่ต้องพยายาม",
-  ];
-
   useEffect(() => {
-    // Pull name from sessionStorage — set by home page
     const saved = sessionStorage.getItem("birthdayName");
     if (saved) setName(saved);
 
@@ -70,6 +64,12 @@ export default function FinalPage() {
     setClickCount((c) => c + 1);
     launchConfetti();
   };
+
+  // Resolve wish — custom if name matches, otherwise default
+  const customWish = getWish(name);
+  const heading = customWish ? customWish.heading : defaultWish.heading(name);
+  const lines = customWish ? customWish.lines : defaultWish.lines;
+  const closing = customWish ? customWish.closing : defaultWish.closing(name);
 
   return (
     <div
@@ -132,7 +132,6 @@ export default function FinalPage() {
 
         {showMessage && (
           <div style={{ animation: "popIn 0.7s ease forwards" }}>
-            {/* Personalized heading — shows name if available */}
             <h1
               className="font-black leading-tight mb-3"
               style={{
@@ -141,7 +140,7 @@ export default function FinalPage() {
                 textShadow: "4px 4px 0 #ffe600",
               }}
             >
-              {name ? `อีกหนึ่งปีของ${name}` : "สุขสันต์วันเกิดนะ :)"}
+              {heading}
             </h1>
 
             <div
@@ -156,17 +155,14 @@ export default function FinalPage() {
               <p className="text-white opacity-90 leading-relaxed text-base">
                 {lines.map((line, i) => (
                   <span key={i}>
-                    {/* Inject name into the meaningful line */}
-                    {line === "แค่นี้ก็เก่งมากแล้วนะ" && name
-                      ? `${name}เก่งมากจริง ๆ`
-                      : line}
+                    {line}
                     <br />
                   </span>
                 ))}
               </p>
 
               <p className="mt-4 font-bold" style={{ color: "#ffe600" }}>
-                {name ? `ขอบคุณ${name}ที่ยังอยู่ตรงนี้นะ 🫶` : "ขอบคุณที่ยังอยู่ตรงนี้นะ 🫶"}
+                {closing}
               </p>
             </div>
           </div>
